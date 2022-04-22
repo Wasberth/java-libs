@@ -3,7 +3,7 @@
  * 2BM1
  * Inteligencia artificial
  * 06/04/2022
-*/
+ */
 package willy.structures.nodes;
 
 import willy.util.__;
@@ -41,5 +41,5 @@ public class StackNode<T> {
     public String toString() {
         return "StackNode{" + "value=" + value + ", previous=" + previous + '}';
     }
-    
+
 }

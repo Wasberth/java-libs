@@ -2,7 +2,7 @@
  * García Piña Wilberth David
  * 2BM1
  * Inteligencia artificial
- * 06/04/2022
+ * 22/04/2022
 */
 package willy.structures;
 
@@ -154,13 +154,13 @@ public class SortableWArray<T extends Sortable> extends WArray<T> {
         return -1;
     }
 
-    public int startBinarySearch(T searched) { // 8 + 17log(n)
+    public int binarySearch(T searched, int i, int j) { // 8 + 17log(n)
         if (!sorted) {
             throw new IllegalStateException("El array tiene que estar ordenado antes de usar la búsqueda binaria");
         }
 
         // 8 + (8 + 2g + 2ds)log(n)
-        int i = 0, j = getSize() - 1, m;
+        int m;
 
         while (i < j) {
             m = i + (j - i) / 2;
@@ -185,6 +185,12 @@ public class SortableWArray<T extends Sortable> extends WArray<T> {
         }
 
         return -1;
+    }
+    
+    public int startBinarySearch(T searched){
+        int i = 0, j = getSize() - 1;
+        
+        return binarySearch(searched, i, j);
     }
 
 }

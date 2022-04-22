@@ -2,7 +2,7 @@
  * García Piña Wilberth David
  * 2BM1
  * Inteligencia artificial
- * 06/04/2022
+ * 22/04/2022
 */
 package willy.structures;
 
@@ -44,25 +44,32 @@ public class Stack<T> {
         this.top = this.top.__get().getPrevious();
         this.counter--;
         return node.__get().getValue();
-
     }
     
-    public int getSize(){
+    public T peek(){
+        if (this.counter == 0) {
+            return null;
+        }
+        
+        return top.__get().getValue();
+    }
+
+    public int getSize() {
         return counter;
     }
-    
-    public boolean isEmpty(){
+
+    public boolean isEmpty() {
         return counter == 0;
     }
-    
-    public void emptyfy(){
+
+    public void emptyfy() {
         T a;
-        while(top != null){
+        while (top != null) {
             a = this.pop();
             System.out.println("Desapilando: " + a);
         }
     }
-    
+
     @Override
     public String toString() {
         String s = "";
@@ -75,6 +82,5 @@ public class Stack<T> {
 
         return "[ " + s + "]";
     }
-
 
 }

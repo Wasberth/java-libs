@@ -6,6 +6,9 @@
 package willyplaceholder;
 
 import java.net.ServerSocket;
+import java.util.concurrent.TimeUnit;
+import willy.structures.Queue;
+import willy.structures.QueueArray;
 import willy.structures.SortableWArray;
 import willy.structures.Stack;
 import willy.structures.StackArray;
@@ -18,28 +21,14 @@ import willy.structures.nodes.Sortable;
  */
 public class TestAgain {
 
-    public static void main(String args[]) {
-        StackArray<Test> s = new StackArray<>(Test.class, 15);
-        System.out.println(s.getStacked() + ": " + s);
-        s.push(new Test(0));
-        System.out.println(s.getStacked() + ": " + s);
-        s.push(new Test(50));
-        s.push(new Test(3));
-        System.out.println(s.getStacked() + ": " + s);
-        Test a;
+    public static void main(String args[]) throws InterruptedException {
+        Queue<Test> s = new Queue<>();
         
-        a = s.pop();
-        System.out.println(a);
-        System.out.println(s.getStacked() + ": " + s);
+        for (int i = 0; i < 50000; i++) {
+            s.add(new Test(i + 1));
+        }
+        
         s.emptyfy();
-        System.out.println(s.getStacked() + ": " + s);
-        a = s.pop();
-        System.out.println(a);
-        System.out.println(s.getStacked() + ": " + s);
-    }
-    
-    public static void sort(WArray<Test> arr){
-        arr.realloc(7);
     }
 
 }
