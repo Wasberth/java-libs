@@ -17,21 +17,26 @@ import willy.util.__;
 public class Queue<T> {
 
     private __<QueueNode<T>> next;
+    private __<QueueNode<T>> last;
     private int counter;
 
     public Queue() {
         this.next = null;
+        this.last = null;
         this.counter = 0;
     }
 
     public void add(final T t) {
+        __<QueueNode<T>> nl = new __<>(new QueueNode<>(t));
         if (next == null) {
-            next = new __<>(new QueueNode<>(t));
+            next = nl;
+            last = next;
             counter++;
             return;
         }
 
-        next.__get().addNext(t);
+        last.__get().setNext(nl);
+        last = nl;
         counter++;
     }
 
@@ -64,7 +69,7 @@ public class Queue<T> {
     
     public void emptyfy() {
         T a;
-        while (next != null) {
+        while (counter > 0) {
             a = this.remove();
             System.out.println("Desencolando: " + a);
         }

@@ -7,6 +7,7 @@ package willyplaceholder;
 
 import java.net.ServerSocket;
 import java.util.concurrent.TimeUnit;
+import willy.structures.BiQueue;
 import willy.structures.Queue;
 import willy.structures.QueueArray;
 import willy.structures.SortableWArray;
@@ -22,13 +23,28 @@ import willy.structures.nodes.Sortable;
 public class TestAgain {
 
     public static void main(String args[]) throws InterruptedException {
-        Queue<Test> s = new Queue<>();
+        BiQueue<Test> s = new BiQueue<>();
+        System.out.println("EMPTY QUEUE: " + s);
         
-        for (int i = 0; i < 50000; i++) {
-            s.add(new Test(i + 1));
+        for (int i = 0; i < 500; i++) {
+            if (i % 2 == 0) {
+                s.addStart(new Test(i));
+            }
+            
+            if (i % 2 == 1) {
+                s.addEnd(new Test(i));
+            }
+            
+            if (i % 5 == 0) {
+                System.out.println("Removed " + s.removeStart() + " y " + s.removeEnd());
+            }
         }
         
-        s.emptyfy();
+        System.out.println("QUEUE: " + s);
+        
+        s.emptyfyStart();
+        
+        System.out.println("TEST " + s);
     }
 
 }

@@ -3,7 +3,7 @@
  * 2BM1
  * Inteligencia artificial
  * 22/04/2022
-*/
+ */
 package willy.structures.nodes;
 
 import willy.util.__;
@@ -19,11 +19,6 @@ public class QueueNode<T> {
     private final T value;
     private __<QueueNode<T>> next;
 
-    public QueueNode(final T value, final __<QueueNode<T>> next) {
-        this.value = value;
-        this.next = next;
-    }
-
     public QueueNode(final T value) {
         this.value = value;
         this.next = null;
@@ -37,22 +32,8 @@ public class QueueNode<T> {
         return next;
     }
 
-    public void addNext(final T value) {
-        __<QueueNode<T>> nNext = new __<>(new QueueNode<>(value));
-
-        if (next == null) {
-            next = nNext;
-            return;
-        }
-
-        __<QueueNode<T>> added = next;
-
-        while (added.__get().next != null) {
-            added = added.__get().next;
-        }
-
-        added.__get().next = nNext;
-
+    public void setNext(__<QueueNode<T>> next) {
+        this.next = next;
     }
 
     @Override
