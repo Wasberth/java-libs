@@ -5,14 +5,8 @@
  */
 package willyplaceholder;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import willy.util.BinaryOperations;
+import willy.structures.WLinkedList;
+import willy.structures.WList;
 
 /**
  *
@@ -24,7 +18,26 @@ public class WillyPlaceholder {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println(BinaryOperations.toDec("1111111111"));
+        WList<Test> lis = new WLinkedList<>();
+
+        for (int i = 0; i < 20; i++) {
+            if (i % 2 == 0) {
+                lis.setFirst(new Test(i));
+            }
+            lis.set(new Test(i), i);
+        }
+        
+        System.out.println(lis);
+        System.out.println(lis.size());
+        System.out.println(lis.getFirst());
+        System.out.println(lis.getLast());
+        System.out.println(lis.get(0));
+        
+        for (int i = 0; i < 30; i++) {
+            System.out.println(lis.pop(lis.size() / 2));
+            System.out.println(lis);
+        }
+        
     }
 
 }
