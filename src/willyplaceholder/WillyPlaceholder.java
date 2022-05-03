@@ -5,7 +5,7 @@
  */
 package willyplaceholder;
 
-import willy.structures.WLinkedList;
+import willy.structures.WDoubleLinkedList;
 import willy.structures.WList;
 
 /**
@@ -18,20 +18,28 @@ public class WillyPlaceholder {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WList<Test> lis = new WLinkedList<>();
+        WList<Test> lis = new WDoubleLinkedList<>();
 
         for (int i = 0; i < 20; i++) {
-            if (i % 2 == 0) {
+            System.out.println(lis);
+            if (i % 3 == 0) {
                 lis.setFirst(new Test(i));
+                continue;
             }
-            lis.set(new Test(i), i);
+            
+            if (i % 3 == 1) {
+                lis.set(new Test(i), i);
+                continue;
+            }
+            
+            lis.setLast(new Test(i));
         }
         
         System.out.println(lis);
         System.out.println(lis.size());
         System.out.println(lis.getFirst());
         System.out.println(lis.getLast());
-        System.out.println(lis.get(0));
+        System.out.println(lis.get(5));
         
         for (int i = 0; i < 30; i++) {
             System.out.println(lis.pop(lis.size() / 2));
