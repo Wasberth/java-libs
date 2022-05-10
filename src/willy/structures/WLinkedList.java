@@ -30,7 +30,7 @@ public class WLinkedList<T> implements WList<T> {
     }
 
     @Override
-    public void setFirst(T t) {
+    public void pushFirst(T t) {
         LinkedNode<T> nn = new LinkedNode<>(t);
         nn.setNext(first);
         
@@ -39,18 +39,18 @@ public class WLinkedList<T> implements WList<T> {
     }
 
     @Override
-    public void setLast(T t) {
-        set(t, size);
+    public void pushLast(T t) {
+        push(t, size);
     }
 
     @Override
-    public void set(final T t, final int n) {
+    public void push(final T t, final int n) {
         if (n > size) {
             throw new IndexOutOfBoundsException("El índice (" + n + ") debe ser menor o igual al tamaño (" + size + ")");
         }
 
         if (n == 0) {
-            setFirst(t);
+            pushFirst(t);
             return;
         }
 
@@ -156,6 +156,17 @@ public class WLinkedList<T> implements WList<T> {
         }
 
         return s + "]";
+    }
+    
+    @Override
+    public WLinkedList<T> copy(int left, int right) {
+        final WLinkedList<T> list = new WLinkedList<>();
+        
+        for (int i = left; i < right; i++) {
+            list.pushLast(get(i));
+        }
+        
+        return list;
     }
 
 }

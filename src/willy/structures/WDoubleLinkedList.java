@@ -30,7 +30,7 @@ public class WDoubleLinkedList<T> implements WList<T> {
     }
 
     @Override
-    public void setFirst(T t) {
+    public void pushFirst(T t) {
         DoubleLinkedNode<T> nn = new DoubleLinkedNode<>(t);
         nn.setNext(first);
 
@@ -45,9 +45,9 @@ public class WDoubleLinkedList<T> implements WList<T> {
     }
 
     @Override
-    public void setLast(T t) {
+    public void pushLast(T t) {
         if (size == 0) {
-            set(t, 0);
+            push(t, 0);
             return;
         }
 
@@ -66,18 +66,18 @@ public class WDoubleLinkedList<T> implements WList<T> {
     }
 
     @Override
-    public void set(final T t, final int n) {
+    public void push(final T t, final int n) {
         if (n > size) {
             throw new IndexOutOfBoundsException("El índice (" + n + ") debe ser menor o igual al tamaño (" + size + ")");
         }
 
         if (n == 0) {
-            setFirst(t);
+            pushFirst(t);
             return;
         }
 
         if (n == size) {
-            setLast(t);
+            pushLast(t);
             return;
         }
 
@@ -129,12 +129,42 @@ public class WDoubleLinkedList<T> implements WList<T> {
 
     @Override
     public T popFirst() {
-        return pop(0);
+        if (size == 0) {
+            throw new IndexOutOfBoundsException("La lista está vacia");
+        }
+        
+        T popped = first.__get().getValue();
+        
+        first = first.__get().getNext();
+        first.__get().setPrev(new __(null));
+        
+        size--;
+        
+        return popped;
     }
 
     @Override
     public T popLast() {
-        return pop(size - 1);
+        if (size == 0) {
+            throw new IndexOutOfBoundsException("La lista está vacia");
+        }
+        
+        if (size == 1) {
+            return popFirst();
+        }
+        
+        __<DoubleLinkedNode<T>> last = first;
+        
+        for (int i = 0; i < size - 1; i++) {
+            last = last.__get().getNext();
+        }
+        
+        T popped = last.__get().getValue();
+        
+        last.__get().getPrev().__get().setNext(new __(null));
+        size--;
+        
+        return popped;
     }
 
     @Override
@@ -146,6 +176,14 @@ public class WDoubleLinkedList<T> implements WList<T> {
         if (n < 0 || n >= size) {
             throw new IndexOutOfBoundsException("El índice (" + n + ") debe ser mayor a 0 y menor al tamaño (" + size + ")");
         }
+        
+        if (n == 0) {
+            return popFirst();
+        }
+        
+        if (n == size - 1) {
+            return popLast();
+        }
 
         T popped;
         __<DoubleLinkedNode<T>> node = first;
@@ -156,7 +194,21 @@ public class WDoubleLinkedList<T> implements WList<T> {
 
         popped = node.__get().getValue();
 
-        node.__set(node.__get().getNext().__get());
+        if (size == 1) {
+            first = new __(null);
+            size--;
+            return popped;
+        }
+        
+        if (node.__get().getPrev().__get() != null) {
+            node.__get().getPrev().__get().setNext(node.__get().getNext());
+        }
+        
+        if (node.__get().getNext().__get() != null) {
+            node.__get().getNext().__get().setPrev(node.__get().getPrev());
+        }
+        
+        //node.__set(node.__get().getNext().__get());
 
         size--;
         return popped;
@@ -169,15 +221,27 @@ public class WDoubleLinkedList<T> implements WList<T> {
 
     @Override
     public String toString() {
-        String s = "[";
+        String s = size + ": [";
 
         __<DoubleLinkedNode<T>> node = first;
         while (node.__get() != null) {
+            //System.out.println(node);
             s = s + node.__get().getValue() + (node.__get().getNext().__get() == null ? "" : ", ");
             node = node.__get().getNext();
         }
 
         return s + "]";
+    }
+
+    @Override
+    public WDoubleLinkedList<T> copy(int left, int right) {
+        final WDoubleLinkedList<T> list = new WDoubleLinkedList<>();
+        
+        for (int i = left; i < right; i++) {
+            list.pushLast(get(i));
+        }
+        
+        return list;
     }
 
 }

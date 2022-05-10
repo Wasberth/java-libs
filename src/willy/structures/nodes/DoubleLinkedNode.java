@@ -45,10 +45,45 @@ public class DoubleLinkedNode<T> {
     public void setPrev(__<DoubleLinkedNode<T>> prev) {
         this.prev = prev;
     }
+    
+    public String prevString(){
+        //System.out.println("c: " + value);
+        if (prev != null && prev.__get() != null) {
+            //System.out.println("previ: " + prev.__get().value);
+        }
+        
+        String ps = "null";
+        
+        if (prev != null && prev.__get() != null) {
+            ps = prev.__get().prevString();
+        }
+        
+        return "DoubleLinkedNode{" + "value=" + value + ", prev=" + ps + '}';
+    }
+    
+    public String nextString(){
+        String ns = "null";
+        
+        if (next != null && next.__get() != null) {
+            ns = next.__get().nextString();
+        }
+        
+        return "DoubleLinkedNode{" + "value=" + value + ", next=" + ns + '}';
+    }
 
     @Override
     public String toString() {
-        return "DoubleLinkedNode{" + "value=" + value + ", next=" + next + '}';
+        String ps = "null", ns = "null";
+        
+        if (prev != null && prev.__get() != null) {
+            ps = prev.__get().prevString();
+        }
+        
+        if (next != null && next.__get() != null) {
+            ns = next.__get().nextString();
+        }
+        
+        return "DoubleLinkedNode{" + "prev=" + ps + ", value=" + value + ", next=" + ns + '}';
     }
 
 }

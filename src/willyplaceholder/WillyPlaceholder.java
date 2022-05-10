@@ -18,34 +18,34 @@ public class WillyPlaceholder {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        WList<Test> lis = new WDoubleLinkedList<>();
+        WList<Character> lis = new WDoubleLinkedList<>();
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             System.out.println(lis);
             if (i % 3 == 0) {
-                lis.setFirst(new Test(i));
+                lis.pushFirst((char) (i + 50));
                 continue;
             }
-            
+
             if (i % 3 == 1) {
-                lis.set(new Test(i), i);
+                lis.push((char) (i + 50), lis.size() / 2);
                 continue;
             }
-            
-            lis.setLast(new Test(i));
+
+            lis.push('a', 1);
         }
-        
+
         System.out.println(lis);
         System.out.println(lis.size());
         System.out.println(lis.getFirst());
         System.out.println(lis.getLast());
         System.out.println(lis.get(5));
         
-        for (int i = 0; i < 30; i++) {
-            System.out.println(lis.pop(lis.size() / 2));
-            System.out.println(lis);
-        }
+        lis.mergeSort(Character::compare);
         
+        WList<Character> lis2 = lis.copy();
+        System.out.println(lis2);
+
     }
 
 }
