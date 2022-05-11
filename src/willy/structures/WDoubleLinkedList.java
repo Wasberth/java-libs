@@ -67,8 +67,8 @@ public class WDoubleLinkedList<T> implements WList<T> {
 
     @Override
     public void push(final T t, final int n) {
-        if (n > size) {
-            throw new IndexOutOfBoundsException("El índice (" + n + ") debe ser menor o igual al tamaño (" + size + ")");
+        if (n < 0 || n >= size) {
+            throw new IndexOutOfBoundsException("El índice (" + n + ") debe ser mayor a 0 y menor al tamaño (" + size + ")");
         }
 
         if (n == 0) {
@@ -135,6 +135,12 @@ public class WDoubleLinkedList<T> implements WList<T> {
         
         T popped = first.__get().getValue();
         
+        if (size == 1) {
+            first = new __(null);
+            size--;
+            return popped;
+        }
+        
         first = first.__get().getNext();
         first.__get().setPrev(new __(null));
         
@@ -149,8 +155,13 @@ public class WDoubleLinkedList<T> implements WList<T> {
             throw new IndexOutOfBoundsException("La lista está vacia");
         }
         
+        T popped;
+        
         if (size == 1) {
-            return popFirst();
+            popped = first.__get().getValue();
+            first = new __(null);
+            size--;
+            return popped;
         }
         
         __<DoubleLinkedNode<T>> last = first;
@@ -159,7 +170,7 @@ public class WDoubleLinkedList<T> implements WList<T> {
             last = last.__get().getNext();
         }
         
-        T popped = last.__get().getValue();
+        popped = last.__get().getValue();
         
         last.__get().getPrev().__get().setNext(new __(null));
         size--;
@@ -221,7 +232,7 @@ public class WDoubleLinkedList<T> implements WList<T> {
 
     @Override
     public String toString() {
-        String s = size + ": [";
+        String s = "[";
 
         __<DoubleLinkedNode<T>> node = first;
         while (node.__get() != null) {

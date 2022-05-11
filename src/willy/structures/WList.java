@@ -155,4 +155,38 @@ public interface WList<T> {
     public default void mergeSort(Comparator<? super T> c){
         sortingAndMerging(0, size() - 1, c);
     };
+    
+    public default void clear(){
+        while(!isEmpty()){
+            popFirst();
+        }
+    }
+    
+    public default void add(WList<T> list, int start, int end){
+        if (end > list.size()) {
+            throw new IllegalArgumentException("El índice final debe ser menor o igual al tamaño de la lista");
+        }
+        
+        for (int i = start; i < end; i++) {
+            this.pushLast(list.get(i));
+        }
+    }
+    
+    public default void add(WList<T> list, int end){
+        add(list, 0, end);
+    }
+    
+    public default void add(WList<T> list){
+        add(list, 0, list.size());
+    }
+    
+    public default int indexOf(T t){
+        for (int i = 0; i < size(); i++) {
+            if (t.equals(get(i))) {
+                return i;
+            }
+        }
+        
+        return -1;
+    }
 }
