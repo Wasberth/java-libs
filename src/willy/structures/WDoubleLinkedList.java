@@ -67,7 +67,7 @@ public class WDoubleLinkedList<T> implements WList<T> {
 
     @Override
     public void push(final T t, final int n) {
-        if (n < 0 || n >= size) {
+        if (n < 0 || n > size) {
             throw new IndexOutOfBoundsException("El índice (" + n + ") debe ser mayor a 0 y menor al tamaño (" + size + ")");
         }
 
