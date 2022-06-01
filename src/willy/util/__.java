@@ -28,6 +28,10 @@ public class __<T> {
     public void __set(T ref){
         this.ref = ref;
     }
+    
+    public boolean __isNull(){
+        return ref == null;
+    }
 
     @Override
     public String toString() {

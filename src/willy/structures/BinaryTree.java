@@ -41,6 +41,22 @@ public class BinaryTree<T> {
         return right.__get();
     }
 
+    protected __<BinaryTree<T>> getL() {
+        return left;
+    }
+
+    protected __<BinaryTree<T>> getR() {
+        return right;
+    }
+
+    public boolean hasLeft() {
+        return left != null && !left.__isNull();
+    }
+
+    public boolean hasRight() {
+        return right != null && !right.__isNull();
+    }
+
     public void setValue(T value) {
         this.value = value;
     }
@@ -80,23 +96,65 @@ public class BinaryTree<T> {
         return 1 + size(tree.getLeft()) + size(tree.getRight());
     }
 
-    public static String preOrder(BinaryTree tree) {
+    public int leafCount() {
+        return leafCount(this);
+    }
+
+    public static int leafCount(BinaryTree tree) {
         if (tree == null) {
-            return "";
+            return 0;
         }
 
-        return tree.value.toString() + " " + preOrder(tree.getLeft()) + " " + preOrder(tree.getRight());
+        if (tree.getL().__isNull() && tree.getR().__isNull()) {
+            return 1;
+        }
+
+        return leafCount(tree.getLeft()) + leafCount(tree.getRight());
+    }
+
+    public BinaryTree<T> search(T value) {
+        return search(value, this);
+    }
+
+    public static <E> BinaryTree<E> search(E value, BinaryTree<E> tree) {
+        if (tree == null) {
+            return null;
+        }
+
+        if (tree.getValue() == value) {
+            return tree;
+        }
+
+        BinaryTree<E> found = search(value, tree.getLeft());
+
+        if (found != null) {
+            return found;
+        }
+
+        return search(value, tree.getRight());
+    }
+
+    public static <E> void preOrder(BinaryTree<E> tree, Queue<E> q) {
+        if (tree == null) {
+            return;
+        }
+
+        q.add(tree.value);
+        preOrder(tree.getLeft(), q);
+        preOrder(tree.getRight(), q);
     }
 
     public String preOrder() {
-        return preOrder(this);
+        Queue<T> q = new Queue<>();
+        preOrder(this, q);
+        return q.toString();
     }
 
     public static <E> void inOrder(BinaryTree<E> tree, Queue<E> q) {
         if (tree == null) {
             return;
         }
-        
+
         inOrder(tree.getLeft(), q);
         q.add(tree.value);
         inOrder(tree.getRight(), q);
@@ -108,40 +166,25 @@ public class BinaryTree<T> {
         return q.toString();
     }
 
-    private static String toString(BinaryTree tree, int w) {
+    public static <E> void postOrder(BinaryTree<E> tree, Queue<E> q) {
         if (tree == null) {
-            return "";
+            return;
         }
 
-        String s = "";
-        for (int i = 0; i < w; i++) {
-            s = s + "|";
-            
-            if (i != w - 1) {
-                s = s + "  "; 
-            }
-        }
-        
-        if (!s.equals("")) {
-            s = s + "---";
-        }
+        postOrder(tree.getLeft(), q);
+        postOrder(tree.getRight(), q);
+        q.add(tree.value);
+    }
 
-        String l = toString(tree.getLeft(), w + 1);
-        if (!l.equals("")) {
-            l = "\n" + l;
-        }
-
-        String r = toString(tree.getRight(), w + 1);
-        if (!r.equals("")) {
-            r = "\n" + r;
-        }
-
-        return s + tree.value + l + r;
+    public String postOrder() {
+        Queue<T> q = new Queue<>();
+        inOrder(this, q);
+        return q.toString();
     }
 
     @Override
     public String toString() {
-        return toString(this, 0);
+        return "BinaryTree{" + "value=" + value + ", left=" + left + ", right=" + right + '}';
     }
 
 }

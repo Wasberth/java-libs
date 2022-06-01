@@ -36,6 +36,7 @@ public class WRandom {
     };
 
     public WRandom() {
+        this.seed = new BigInteger(String.valueOf(System.currentTimeMillis()));
     }
 
     public WRandom(long seed) {
@@ -132,7 +133,7 @@ public class WRandom {
     
     public void randomize(WList list) {
         list.mergeSort((Object o1, Object o2) -> {
-            return nextInt(0, 2) - 1;
+            return nextBoolean()? 1 : - 1;
         });
     }
 
